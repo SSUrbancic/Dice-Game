@@ -10,8 +10,9 @@ function rollTheDice (numberOfSidesOnDice){
 // console.log(rollTheDice(4));
 
 
-// let firstPlayer = getPlayerInput("Player Name:");
-// let secondPlayer = getPlayerInput("Player Name:");
+
+// let firstPlayer = getPlayerInput("Player One's Name:");
+// let secondPlayer = getPlayerInput("Player Two's Name:");
 // // let thirdPlayer = getPlayerInput("Player Name:");
 // // let fourthPlayer = getPlayerInput("Player Name:");
 
@@ -23,45 +24,82 @@ function getPlayerInput (question) {
 	return playerInput;
 }
 
+let firstTurn = determineFirstTurn();
 
-
-function determineFirstPlayer(){
+function determineFirstTurn(firstTurn){
 	let firstPlayer = rollTheDice(20);
 	let secondPlayer = rollTheDice(20);
-	let thirdPlayer = rollTheDice(20);
-	let fourthPlayer = rollTheDice(20);
-	let firstTurn;
-if (firstPlayer > secondPlayer && thirdPlayer && fourthPlayer) {
-	firstTurn = firstPlayer;
-	console.log("First player goes first!");
-}
-	else if (secondPlayer > firstPlayer && thirdPlayer && fourthPlayer) {
-	firstTurn = secondPlayer;
-	console.log("Second player goes first!");
-}
-	else if (thirdPlayer > firstPlayer && secondPlayer && fourthPlayer) {
-	firstTurn = thirdPlayer;
-	console.log("Third player goes first!");
+
+if (firstPlayer > secondPlayer) {
+	firstTurn = "First Player";
+	console.log("First player attacks first!");
 }
 	else {
-	firsturn = fourthPlayer;
-	console.log("Fourth player goes first!");
+	firstTurn = "Second Player";
+	console.log("Second player attacks first!");
 }
 return firstTurn;
 }
 
-function attack(){
-	let attackPoints = rollTheDice(20) + rollTheDice(6) + rollTheDice(4)
-	return attackPoints
+
+
+
+
+function determineAttackPoints(){
+	let attackPoints = rollTheDice(20) + rollTheDice(12) + rollTheDice(4);
+	return attackPoints;
 }
 
-function defense(){
-	let defensePoints = rollTheDice(20) + rollTheDice(12) + rollTheDice(4)
-	return defensePoints	
+function determineDefensePoints(){
+	let defensePoints = rollTheDice(10) + rollTheDice(12) + rollTheDice(4);
+	return defensePoints;	
 }
 
-console.log(defense())
-console.log(attack())
+function determineDamageDealt(){
+	let damageDealt = determineAttackPoints() - determineDefensePoints();
+	console.log(damageDealt);
+	return damageDealt;
+}
+
+
+function playerOneAttack(){
+	let playerOneAttack = determineDamageDealt();
+	if (playerOneAttack > 0) {
+		playerTwo.health = playerTwo.health - playerOneAttack;
+	}
+	else {
+	playerOneAttack = 0;
+	}
+	console.log(playerTwo.health)
+	return playerTwo.health
+	}
+
+
+
+function playerTwoAttack(){
+	let playerTwoAttack = determineDamageDealt();
+	if (playerTwoAttack > 0) {
+		playerOne.health = playerOne.health - playerTwoAttack;
+	}
+	else {
+	playerTwoAttack = 0;
+	}
+	console.log(playerOne.health)
+	return playerOne.health
+	}
+
+
+
+
+let playerOne = {
+	health: 100,
+}
+
+let playerTwo = {
+	health: 100,
+}
+
+
 //starting the game first player will roll the dice which will determine attach power
 //second player will roll the dice to determine defense points
 // if attack is higher then the remainder will be dealt as damage
