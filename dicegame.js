@@ -1,10 +1,3 @@
-// console.log(rollTheDice(20));
-// console.log(rollTheDice(6));
-// console.log(rollTheDice(8));
-// console.log(rollTheDice(10));
-// console.log(rollTheDice(12));
-// console.log(rollTheDice(4));
-
 
 
 // let firstPlayer = getPlayerInput("Player One's Name:");
@@ -13,20 +6,20 @@
 // console.log(firstPlayer + " is Player One!");
 // console.log(secondPlayer + " is Player Two!");
 
+
+
 let playerOne = {
 	health: 100,
+	name: getPlayerInput("What is your name?"),
 }
 
 let playerTwo = {
 	health: 100,
+	name: getPlayerInput("What is your name?"),
 }
 
-
-
-
-
-
-
+console.log(playerOne.name + " is Player One!")
+console.log(playerTwo.name + " is Player Two!")
 
 function rollTheDice (numberOfSidesOnDice){
 	let rollOfTheDice = Math.floor(Math.random() * numberOfSidesOnDice) + 1;
@@ -48,16 +41,16 @@ function getPlayerInput (question) {
 // 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
 // 	let playerTwoHeavyAttack = document.getElementById("heavyAttackPlayerTwoButton");
 // 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
-// 	let playerOneHeavyAttack = document.getElementById("heavyAttackPlayerOneButton")
+// 	let playerOneHeavyAttack = document.getElementById("heavyAttackPlayerOneButton");
 
 // if (firstPlayer > secondPlayer) {
 // 	firstTurn = "First Player";
-// 	playerTwoAttackButton.disabled = true;
+// 	playerTwoAttackButton.disabled = false;
 // 	playerTwoHeavyAttack.disabled = true;
 // }
 // 	else {
 // 	firstTurn = "Second Player";
-// 	playerOneAttackButton.disabled = true;
+// 	playerOneAttackButton.disabled = false;
 // 	playerOneHeavyAttack.disabled = true;
 // }
 // return firstTurn;
@@ -78,82 +71,126 @@ function determineDamageDealt(){
 	return damageDealt;
 }
 
+function determineHeavyAttack(){
+	let heavyAttack = rollTheDice(10) + rollTheDice(20) + rollTheDice(4) + rollTheDice(8) + rollTheDice(12) + rollTheDice(6);
+	return heavyAttack;
+}
+
+function determineDefenseToHeavyAttack(){
+	let defenseToHeavyAttack = rollTheDice(8) + rollTheDice(10);
+	return defenseToHeavyAttack;
+}
+
+
 function determineHeavyAttackDamage(){
-	let heavyAttack = rollTheDice(10) + rollTheDice(20) + rollTheDice(4) + rollTheDice(8) + rollTheDice(12) + rollTheDice(6)
-	let defenseHeavyAttack = rollTheDice(8) + rollTheDice(10)
-	let heavyAttackDamage = heavyAttack - defenseHeavyAttack
-	return heavyAttackDamage
+	let heavyAttack = determineHeavyAttack();
+	let defenseToHeavyAttack = determineDefenseToHeavyAttack();
+	let heavyAttackDamage = heavyAttack - defenseToHeavyAttack;
+	return heavyAttackDamage;
 }
 
 function playerOneAttack(){
 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
 	let playerOneAttack = determineDamageDealt();
 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
+	let playerTwoHeavyAttackButton = document.getElementById("heavyAttackPlayerTwoButton");
+	let playerOneHeavyAttackButton = document.getElementById("heavyAttackPlayerOneButton");
 
-	if (playerOneAttack > 0) {
-		playerTwo.health = playerTwo.health - playerOneAttack;
+	if (playerOneAttack > playerTwo.health){
+		console.log("Player One Wins");
+		playerTwo.health = 0
+	}
+	else if (playerOneAttack >= 0) {
+		playerTwo.health -= playerOneAttack;
 	}
 	else {
 	playerOneAttack = 0;
 	}
+
+	console.log("Player Two health: " + playerTwo.health);
+
+	playerTwoHeavyAttackButton.disabled = false;
+	playerOneHeavyAttackButton.disabled = true;
 	playerOneAttackButton.disabled = true;
 	playerTwoAttackButton.disabled = false;
-	console.log("Player Two health: " + playerTwo.health);
-	return playerOneAttack;
+	return playerTwo.health;
 	}
 
 function playerTwoAttack(){
 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
 	let playerTwoAttack = determineDamageDealt();
 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
+	let playerTwoHeavyAttackButton = document.getElementById("heavyAttackPlayerTwoButton");
+	let playerOneHeavyAttackButton = document.getElementById("heavyAttackPlayerOneButton");
 
-	if (playerTwoAttack > 0) {
-		playerOne.health = playerOne.health - playerTwoAttack;
+	if (playerTwoAttack > playerOne.health){
+		console.log("Player Two Wins");
+		playerOne.health = 0
+	}
+	else if (playerTwoAttack >= 0) {
+		playerOne.health -= playerTwoAttack;
 	}
 	else {
 	playerTwoAttack = 0;
 	}
+	console.log("Player One's Health: " + playerOne.health);
+	playerTwoHeavyAttackButton.disabled = true;
 	playerTwoAttackButton.disabled = true;
 	playerOneAttackButton.disabled = false;
-	console.log("Player One health: " + playerOne.health);
-	return playerTwoAttack;
+	playerOneHeavyAttackButton.disabled = false;
+	return playerOne.health;
 	}
 
 function playerOneHeavyAttack(){
-	let heavyAttackDamage = determineHeavyAttackDamage();
-	let playerOneHeavyAttack = document.getElementById("heavyAttackPlayerOneButton");
-	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
-	playerTwo.health -= heavyAttackDamage;
+	let heavyAttackDamage = determineHeavyAttackDamage();
+	let playerOneHeavyAttackButton = document.getElementById("heavyAttackPlayerOneButton");
+	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
+	let playerTwoHeavyAttackButton = document.getElementById("heavyAttackPlayerTwoButton");
+
+	if (heavyAttackDamage > playerTwo.health){
+		console.log("Player One Wins");
+		playerTwo.health = 0
+	}
+	else if (heavyAttackDamage >= 0) {
+		playerTwo.health -= heavyAttackDamage;
+	}
+	else {
+	heavyAttackDamage = 0;
+	}
+
 	console.log("Player Two's Health: " + playerTwo.health);
+	playerTwoHeavyAttackButton.disabled = false;
 	playerTwoAttackButton.disabled = false;
-	playerOneHeavyAttack.disabled = true;
 	playerOneAttackButton.disabled = true;
+	playerOneHeavyAttackButton.disabled = true;
 	return playerTwo.health;
 }
 
 function playerTwoHeavyAttack(){
+
 	let heavyAttackDamage = determineHeavyAttackDamage();
 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
-	let playerTwoHeavyAttack = document.getElementById("heavyAttackPlayerTwoButton");
+	let playerTwoHeavyAttackButton = document.getElementById("heavyAttackPlayerTwoButton");
 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
-	playerOne.health -= heavyAttackDamage;
+	let playerOneHeavyAttackButton = document.getElementById("heavyAttackPlayerOneButton");
+
+	if (heavyAttackDamage > playerOne.health){
+		console.log("Player One Wins");
+		playerOne.health = 0
+	}
+	else if (heavyAttackDamage >= 0) {
+		playerOne.health -= heavyAttackDamage;
+	}
+	else {
+	heavyAttackDamage = 0;
+	}
+
 	console.log("Player One's Health: " + playerOne.health);
+
+	playerOneHeavyAttackButton.disabled = false;
 	playerOneAttackButton.disabled = false;
-	playerTwoHeavyAttack.disabled = true;
+	playerTwoHeavyAttackButton.disabled = true;
 	playerTwoAttackButton.disabled = true;
 	return playerOne.health;
 }
-
-
-
-
-
-
-
-
-
-//starting the game first player will roll the dice which will determine attach power
-//second player will roll the dice to determine defense points
-// if attack is higher then the remainder will be dealt as damage
-// if defense ends up being higher no damage will be dealt.
