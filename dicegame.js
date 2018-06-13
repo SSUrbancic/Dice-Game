@@ -70,12 +70,17 @@ function determineDamageDealt(){
 	return damageDealt;
 }
 
+function determineHeavyAttackDamage(){
+	let heavyAttack = rollTheDice(10) + rollTheDice(20) + rollTheDice(4) + rollTheDice(8) + rollTheDice(12) + rollTheDice(6)
+	let defenseHeavyAttack = rollTheDice(8) + rollTheDice(10)
+	let heavyAttackDamage = heavyAttack - defenseHeavyAttack
+	return heavyAttackDamage
+}
+
 function playerOneAttack(){
 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
 	let playerOneAttack = determineDamageDealt();
-	let playerOneSuperCharge = document.getElementById("superChargePlayerOneButton");
 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
-	let playerTwoSuperCharge = document.getElementById("superChargePlayerTwoButton");
 
 	if (playerOneAttack > 0) {
 		playerTwo.health = playerTwo.health - playerOneAttack;
@@ -83,37 +88,49 @@ function playerOneAttack(){
 	else {
 	playerOneAttack = 0;
 	}
-	playerOneAttackButton.disabled = true
-	playerOneSuperCharge.disabled = true
-	playerTwoAttackButton.disabled = false
-	playerTwoSuperCharge.disabled = false
+	playerOneAttackButton.disabled = true;
+	playerTwoAttackButton.disabled = false;
 	console.log("Player Two health: " + playerTwo.health);
-	return playerOneAttack
+	return playerOneAttack;
 	}
 
-	function playerTwoAttack(){
+function playerTwoAttack(){
 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
 	let playerTwoAttack = determineDamageDealt();
-	let playerTwoSuperCharge = document.getElementById("superChargePlayerTwoButton");
 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
-	let playerOneSuperCharge = document.getElementById("superChargePlayerOneButton");
+
 	if (playerTwoAttack > 0) {
 		playerOne.health = playerOne.health - playerTwoAttack;
 	}
 	else {
 	playerTwoAttack = 0;
 	}
-	playerTwoAttackButton.disabled = true
-	playerTwoSuperCharge.disabled = true
-	playerOneAttackButton.disabled = false
-	playerOneSuperCharge.disabled = false
+	playerTwoAttackButton.disabled = true;
+	playerOneAttackButton.disabled = false;
 	console.log("Player One health: " + playerOne.health);
-	return playerTwoAttack
+	return playerTwoAttack;
 	}
 
+function playerOneHeavyAttack(){
+	let heavyAttackDamage = determineHeavyAttackDamage();
+	let playerOneHeavyAttack = document.getElementById("heavyAttackPlayerOneButton");
+	playerTwo.health -= heavyAttackDamage;
+	console.log("Player Two's Health: " + playerTwo.health);
+	playerOneHeavyAttack.disabled = true;
+	return playerTwo.health;
+}
 
+function playerTwoHeavyAttack(){
+	let heavyAttackDamage = determineHeavyAttackDamage();
+	let playerTwoHeavyAttack = document.getElementById("heavyAttackPlayerTwoButton");
+	playerOne.health -= heavyAttackDamage;
+	console.log("Player One's Health: " + playerOne.health);
+	playerTwoHeavyAttack.disabled = true;
+	return playerOne.health;
+}
 
-
+console.log(playerOne.health);
+console.log(playerTwo.health);
 
 
 
