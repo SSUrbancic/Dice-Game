@@ -45,12 +45,20 @@ function getPlayerInput (question) {
 // function determineFirstTurn(firstTurn){
 // 	let firstPlayer = rollTheDice(20);
 // 	let secondPlayer = rollTheDice(20);
+// 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
+// 	let playerTwoHeavyAttack = document.getElementById("heavyAttackPlayerTwoButton");
+// 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
+// 	let playerOneHeavyAttack = document.getElementById("heavyAttackPlayerOneButton")
 
 // if (firstPlayer > secondPlayer) {
 // 	firstTurn = "First Player";
+// 	playerTwoAttackButton.disabled = true;
+// 	playerTwoHeavyAttack.disabled = true;
 // }
 // 	else {
 // 	firstTurn = "Second Player";
+// 	playerOneAttackButton.disabled = true;
+// 	playerOneHeavyAttack.disabled = true;
 // }
 // return firstTurn;
 // }
@@ -114,23 +122,31 @@ function playerTwoAttack(){
 function playerOneHeavyAttack(){
 	let heavyAttackDamage = determineHeavyAttackDamage();
 	let playerOneHeavyAttack = document.getElementById("heavyAttackPlayerOneButton");
+	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
+	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
 	playerTwo.health -= heavyAttackDamage;
 	console.log("Player Two's Health: " + playerTwo.health);
+	playerTwoAttackButton.disabled = false;
 	playerOneHeavyAttack.disabled = true;
+	playerOneAttackButton.disabled = true;
 	return playerTwo.health;
 }
 
 function playerTwoHeavyAttack(){
 	let heavyAttackDamage = determineHeavyAttackDamage();
+	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
 	let playerTwoHeavyAttack = document.getElementById("heavyAttackPlayerTwoButton");
+	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
 	playerOne.health -= heavyAttackDamage;
 	console.log("Player One's Health: " + playerOne.health);
+	playerOneAttackButton.disabled = false;
 	playerTwoHeavyAttack.disabled = true;
+	playerTwoAttackButton.disabled = true;
 	return playerOne.health;
 }
 
-console.log(playerOne.health);
-console.log(playerTwo.health);
+
+
 
 
 
