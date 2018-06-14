@@ -1,13 +1,3 @@
-
-
-// let firstPlayer = getPlayerInput("Player One's Name:");
-// let secondPlayer = getPlayerInput("Player Two's Name:");
-
-// console.log(firstPlayer + " is Player One!");
-// console.log(secondPlayer + " is Player Two!");
-
-
-
 let playerOne = {
 	health: 100,
 	name: getPlayerInput("What is your name?"),
@@ -18,8 +8,8 @@ let playerTwo = {
 	name: getPlayerInput("What is your name?"),
 }
 
-console.log(playerOne.name + " is Player One!")
-console.log(playerTwo.name + " is Player Two!")
+console.log(playerOne.name + " is Player One!");
+console.log(playerTwo.name + " is Player Two!");
 
 function rollTheDice (numberOfSidesOnDice){
 	let rollOfTheDice = Math.floor(Math.random() * numberOfSidesOnDice) + 1;
@@ -32,29 +22,22 @@ function getPlayerInput (question) {
 	return playerInput;
 }
 
-// let firstTurn = determineFirstTurn();
-// console.log(firstTurn + " Attacks First!!");
+let firstTurn = determineFirstTurn();
+console.log(firstTurn + " Attacks First!!");
 
-// function determineFirstTurn(firstTurn){
-// 	let firstPlayer = rollTheDice(20);
-// 	let secondPlayer = rollTheDice(20);
-// 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
-// 	let playerTwoHeavyAttack = document.getElementById("heavyAttackPlayerTwoButton");
-// 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
-// 	let playerOneHeavyAttack = document.getElementById("heavyAttackPlayerOneButton");
+function determineFirstTurn(firstTurn){
+	let firstPlayer = rollTheDice(20);
+	let secondPlayer = rollTheDice(20);
 
-// if (firstPlayer > secondPlayer) {
-// 	firstTurn = "First Player";
-// 	playerTwoAttackButton.disabled = false;
-// 	playerTwoHeavyAttack.disabled = true;
-// }
-// 	else {
-// 	firstTurn = "Second Player";
-// 	playerOneAttackButton.disabled = false;
-// 	playerOneHeavyAttack.disabled = true;
-// }
-// return firstTurn;
-// }
+
+if (firstPlayer > secondPlayer) {
+	firstTurn = "Player One";
+}
+	else {
+	firstTurn = "Player Two";
+}
+return firstTurn;
+}
 
 function determineAttackPoints(){
 	let attackPoints = rollTheDice(20) + rollTheDice(12) + rollTheDice(4);
@@ -98,9 +81,9 @@ function playerOneAttack(){
 
 	if (playerOneAttack > playerTwo.health){
 		console.log("Player One Wins");
-		playerTwo.health = 0
+		playerTwo.health = 0;
 	}
-	else if (playerOneAttack >= 0) {
+	else if (playerOneAttack > 0) {
 		playerTwo.health -= playerOneAttack;
 	}
 	else {
@@ -127,7 +110,7 @@ function playerTwoAttack(){
 		console.log("Player Two Wins");
 		playerOne.health = 0
 	}
-	else if (playerTwoAttack >= 0) {
+	else if (playerTwoAttack > 0) {
 		playerOne.health -= playerTwoAttack;
 	}
 	else {
@@ -150,9 +133,9 @@ function playerOneHeavyAttack(){
 
 	if (heavyAttackDamage > playerTwo.health){
 		console.log("Player One Wins");
-		playerTwo.health = 0
+		playerTwo.health = 0;
 	}
-	else if (heavyAttackDamage >= 0) {
+	else if (heavyAttackDamage > 0) {
 		playerTwo.health -= heavyAttackDamage;
 	}
 	else {
@@ -176,10 +159,10 @@ function playerTwoHeavyAttack(){
 	let playerOneHeavyAttackButton = document.getElementById("heavyAttackPlayerOneButton");
 
 	if (heavyAttackDamage > playerOne.health){
-		console.log("Player One Wins");
-		playerOne.health = 0
+		console.log("Player Two Wins");
+		playerOne.health = 0;
 	}
-	else if (heavyAttackDamage >= 0) {
+	else if (heavyAttackDamage > 0) {
 		playerOne.health -= heavyAttackDamage;
 	}
 	else {
@@ -194,3 +177,66 @@ function playerTwoHeavyAttack(){
 	playerTwoAttackButton.disabled = true;
 	return playerOne.health;
 }
+
+
+
+
+//////////Couldn't get the button to deactivate during turns. Kept gettting a (Cannot set property 'disabled' of null.) 
+//////////Other functionality works fine. 
+// function suckerPunchPlayerOne(){
+
+// 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
+// 	let heavyAttackDamage = determineHeavyAttackDamage();
+// 	let playerOneHeavyAttackButton = document.getElementById("heavyAttackPlayerOneButton");
+// 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
+// 	let playerTwoHeavyAttackButton = document.getElementById("heavyAttackPlayerTwoButton");
+// 	let suckerPunchButtonPlayerOne = document.getElementById("suckerPunchPlayerOne");
+
+// 	let knockEmOut = rollTheDice(20);
+
+// 	if (knockEmOut > 18) {
+// 		playerTwo.health = 0;
+// 		console.log("SUCKER PUNCHED PLAYER ONE WINS!!!");
+// 	}
+
+// 	console.log("Player Two's Health: " + playerTwo.health)
+// 	suckerPunchButtonPlayerOne.disabled = true;
+// 	playerTwoHeavyAttackButton.disabled = false;
+// 	playerOneHeavyAttackButton.disabled = true;
+// 	playerOneAttackButton.disabled = true;
+// 	playerTwoAttackButton.disabled = false;
+
+
+// }
+
+
+// function suckerPunchPlayerTwo(){
+
+// 	let playerOneAttackButton = document.getElementById("playerOneAttackButton");
+// 	let heavyAttackDamage = determineHeavyAttackDamage();
+// 	let playerOneHeavyAttackButton = document.getElementById("heavyAttackPlayerOneButton");
+// 	let playerTwoAttackButton = document.getElementById("playerTwoAttackButton");
+// 	let playerTwoHeavyAttackButton = document.getElementById("heavyAttackPlayerTwoButton");
+// 	let suckerPunchButtonPlayerTwo = document.getElementById("suckerPunchPlayerTwo");
+// 	let suckerPunchButtonPlayerOne = document.getElementById("suckerPunchPlayerOne");
+
+
+// 	let knockEmOut = rollTheDice(20);
+	
+// 	if (knockEmOut > 18) {
+// 		playerOne.health = 0;
+// 		console.log("SUCKER PUNCHED PLAYER TWO WINS!!!");
+// 		}
+
+// 	console.log("Player One's Health: " + playerOne.health)
+// 	playerTwoHeavyAttackButton.disabled = true;
+// 	playerOneHeavyAttackButton.disabled = false;
+// 	playerOneAttackButton.disabled = false;
+// 	playerTwoAttackButton.disabled = true;
+
+
+
+// 	return playerTwo.health;
+
+// }
+
